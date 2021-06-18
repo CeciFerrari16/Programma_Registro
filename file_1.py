@@ -23,7 +23,12 @@ m.config(bg = "white")
 def save_marks():
     with open("data.txt", "a+") as output_file:
         data = text1.get('1.0', END)
-        if len(data.strip()) == 0 : pass
+        #print(isinstance(data, str))
+        if len(data) == 0 : pass
+        elif data.isnumeric() == True:
+            pass
+        elif float(data) > 10 or float(data) < 1:
+            pass
         else: output_file.write(data)
         
 #objects
