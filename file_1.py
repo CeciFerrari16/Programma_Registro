@@ -59,7 +59,13 @@ def save_marks():
         list_update(dct)
 
 def delete_marks():
-    pass
+    with open("data.json", "r") as file:
+        dct = eval(file.read())
+    elem = dct[variable.get()][-1]
+    dct[variable.get()].remove(elem)
+    json_file = json.dumps(dct)
+    with open("data.json", "w") as file:
+        file.write(json_file)
 
 def list_update(dict): # remove \n from list and update data.json
     value = dict[variable.get()]
@@ -144,6 +150,7 @@ class Table:
 				self.e = tk.Entry(root, fg = 'black', font = ('Arial', 12 ,'bold'), width = 12)
 				self.e.grid(row=i, column=j)
 				self.e.insert(END, lst[i][j])
+                #self.e.place(x = 43, y = 54, anchor= "nw")
 
 lst = [(k, v) for k, v in marks.items()]
 
@@ -151,6 +158,5 @@ total_rows = len(lst)
 total_columns = len(lst[0])
 
 marks_label = Table(m)
-#marks_label.place(x = 0, y = 0)
 
 m.mainloop()
