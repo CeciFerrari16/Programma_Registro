@@ -1,22 +1,22 @@
 import tkinter as tk
 from tkinter.constants import END
-from tkinter.filedialog import asksaveasfilename
-from tkinter.messagebox import askyesno
+#from tkinter.filedialog import asksaveasfilename
+#from tkinter.messagebox import askyesno
 import json
 #import keyboard as kb 
-from PIL import ImageTk
-from data import d
-import datetime
+from PIL import ImageTk #serve per importare jpg
+from data import d # prende il dizionario vuoto dei voti
+import datetime # per clock()
 
 m = tk.Tk()
-
+'''
 #cursor coordinates
 def motion(event):
     x, y = event.x, event.y
     print('{}, {}'.format(x, y))
 
 m.bind('<Motion>', motion)
-
+'''
 subjects = [
     "Arte",
     "Ed. Civica",
@@ -35,8 +35,8 @@ subjects = [
 #general things
 m.title("Registro Elettronico")
 m.geometry("700x500")
-m.resizable(False, False)
-m.config(bg = "pink")
+m.resizable(False, False) # non si può ridimensionare la finestra
+m.config(bg = "pink") #configuro il background con un colore
 
 def clock():
     time = datetime.datetime.now().strftime("%H:%M:%S")
@@ -44,21 +44,21 @@ def clock():
     #lab['text'] = time
     m.after(1000, clock) # run itself again after 1000 ms
 
-lab = tk.Label(m, font = ("Arial Bold", 13))
-lab.place(x = 101, y = 500, anchor = "sw")
+lab = tk.Label(m, font = ("Arial Bold", 13)) #etichetta per aggiungere l'ora all'interfaccia
+lab.place(x = 101, y = 500, anchor = "sw") # aggiunta all'interfaccia + àncora
 
 #how to save data
 def text_marks():
     file = open("data.json", "r")
-    marks = file.read()
+    marks = file.read() #tutto il contenuto del file data.json è trasformato in stringa e assegnato alla variabile marks
     file.close()
     return marks
     
 def save_marks():
     with open("data.json", "r") as file:
-        dct = eval(file.read())
+        dct = eval(file.read()) #converte stringa in dizionario quando possibile
         file.close()
-    data = text1.get('1.0', END)
+    data = text1.get('1.0', END) #assegna alla variabile data il contenuto della casellla di testo text1
     #print(isinstance(data, str))
     if len(data) == 0 : pass
     elif data.isnumeric() == True:
@@ -74,7 +74,7 @@ def delete_marks():
         dct = eval(file.read())
         file.close()
     elem = dct[variable.get()][-1]
-    dct[variable.get()].remove(elem)
+    dct[variable.get()].remove(elem) #elimina l'ultimo voto della materia scelta
     json_file = json.dumps(dct)
     with open("data.json", "w") as file:
         file.write(json_file)
@@ -82,11 +82,11 @@ def delete_marks():
 
 def list_update(dict): # remove \n from list and update data.json
     value = dict[variable.get()]
-    d1 = [s.rstrip() for s in value]
-    dict[variable.get()] = d1
-    json_file = json.dumps(dict)
+    d1 = [s.rstrip() for s in value] 
+    dict[variable.get()] = d1 #riassegno il valore aggiornato al dizionario
+    json_file = json.dumps(dict) #serve per modificare i file json
     with open("data.json", "w") as file:
-        file.write(json_file)
+        file.write(json_file) #aggiorno il file
         file.close()
     
 def update(): # marks table
@@ -109,7 +109,7 @@ def update(): # marks table
             )
             mark.grid(row = i, column = j)
 
-def background():
+def background(): #impostazioni
     bg = tk.Tk()
     bg.title("Colour Settings")
     bg.geometry("400x300")
