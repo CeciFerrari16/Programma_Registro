@@ -115,6 +115,100 @@ def background(): #impostazioni
     bg.geometry("400x300")
     bg.resizable(False, False)
     bg.config(bg = "bisque")
+    
+    #color settings for background
+    def change_pink(): 
+        m.configure(bg ="pink")
+        bg.configure(bg= "pink")
+
+    button_pink = tk.Button(bg, 
+    text = "pink",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_pink)
+    #button_pink.grid(row = 1, column = 2)
+    button_pink.pack()
+
+    def change_lavender(): 
+        m.configure(bg ="lavender")
+        bg.configure(bg ="lavender")
+
+    button_lavender = tk.Button(bg, 
+    text = "lavender",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_lavender)
+    #button_lavender.grid(row = 1, column = 3)
+    button_lavender.pack()
+    
+    def change_khaki(): 
+        m.configure(bg ="khaki")
+        bg.configure(bg ="khaki" ) 
+    
+    button_khaki = tk.Button(bg,
+    text = "khaki",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_khaki)
+    #button_khaki.grid(row = 1, column = 4)
+    button_khaki.pack()
+
+    def change_white(): 
+        m.configure(bg= "white")
+        bg.configure(bg= "white")
+
+    button_white = tk.Button(bg, 
+    text ="white",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_white ) 
+    button_white.pack()
+    #button_white.grid(row= 1, column= 5)
+
+    def change_bisque() : 
+        m.configure(bg="bisque2")
+        bg.configure(bg="bisque2")
+
+    button_bisque = tk.Button(bg,
+    text ="bisque",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_bisque ) 
+    #button_bisque.grid(row=1, colum=6)
+    button_bisque.pack()
+
+    def change_aquamarine(): 
+        m.configure(bg="aquamarine4")
+        bg.configure(bg= "aquamarine4")
+
+    button_aquamarine= tk.Button(bg,
+    text= "aquamarine",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_aquamarine)
+    button_aquamarine.pack()
+
+    def change_blue(): 
+        m.configure(bg="cadet blue")
+        bg.configure(bg= "cadet blue")
+
+    button_blue = tk.Button(bg,
+    text= "blue",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_blue)
+    button_blue.pack()
+
+    def change_red(): 
+        m.configure(bg="indianRed3")
+        bg.configure(bg="indianRed3")
+        
+    button_red = tk.Button(bg,
+    text= "red",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 13),
+    command = change_red)
+    button_red.pack()
 
 '''
 #objects
