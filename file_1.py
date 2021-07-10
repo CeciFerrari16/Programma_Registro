@@ -115,7 +115,21 @@ def background(): #impostazioni
     bg.geometry("400x300")
     bg.resizable(False, False)
     bg.config(bg = "pink")
+    
+    #color settings for background
+    colors= ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
+    def change(colours) : 
+        m.configure(bg = str(colours))
+        bg.configure(bg=str(colours))
 
+    for i in colours: 
+        button = tk.Button(bg, 
+        text= i,
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command=  lambda i=i: change(i))
+        button.pack()
+'''
     colour = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
     
     #color settings for background
@@ -191,7 +205,7 @@ def background(): #impostazioni
         font = ("Arial Bold", 13),
         command = lambda:change("red"))
     button_red.pack()
-
+'''
 '''
 #objects
 img = ImageTk.PhotoImage(file = "rsz_forest.jpg")
