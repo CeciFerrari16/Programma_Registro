@@ -32,11 +32,29 @@ subjects = [
     "Storia"
 ]
 
+colours = [
+    "pink", 
+    "lavender", 
+    "khaki", 
+    "white", 
+    "bisque2", 
+    "aquamarine4", 
+    "cadet blue", 
+    "indianRed3", 
+    "red"
+]
+
+def get_colour():
+    with open("colour.txt", "r") as file:
+        col = file.read()
+        file.close()
+    return str(col)
+
 #general things
 m.title("Registro Elettronico")
 m.geometry("700x500")
 m.resizable(False, False) # non si può ridimensionare la finestra
-m.config(bg = "pink") #configuro il background con un colore
+m.config(bg = get_colour()) #configuro il background con un colore
 
 def clock():
     time = datetime.datetime.now().strftime("%H:%M:%S")
@@ -114,13 +132,13 @@ def background(): #impostazioni
     bg.title("Colour Settings")
     bg.geometry("400x300")
     bg.resizable(False, False)
-    bg.config(bg = "pink")
-    
+    bg.config(bg = get_colour())
+
     #color settings for background
-    colours = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3", "red"]
-    def change(colours) : 
-        m.configure(bg = str(colours))
-        bg.configure(bg=str(colours))
+    def change(colour):
+        m.configure(bg = str(colour))
+        bg.configure(bg=str(colour))
+        save_colour(colour)
 
     for i in colours:
         button = tk.Button(
@@ -128,8 +146,14 @@ def background(): #impostazioni
             text= i,
             relief = tk.RAISED,
             font = ("Arial Bold", 13),
-            command=  lambda i=i: change(i))
+            command = lambda i=i: change(i))
         button.pack()
+
+def save_colour(colour):
+    with open("colour.txt", "w") as file:
+        file.truncate(0)
+        file.write(str(colour))
+        file.close()
 
 '''
 #objects
