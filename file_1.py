@@ -91,18 +91,18 @@ def list_update(dict): # remove \n from list and update data.json
     
 def update(): # marks table
     marks = eval(text_marks())
-    lst = [(k, v) for k, v in marks.items()]
+    lst = [(k, v) for k, v in marks.items()] #lista formata da tuple
 
     total_rows = len(lst)
     total_columns = len(lst[0])
 
-    for i in range(total_rows):
+    for i in range(total_rows): #crea una tabella con i voti
         for j in range(total_columns):
             
             mark = tk.Label(
                 m, 
-                fg = "black",
-                text = lst[i][j],
+                fg = "black", #foreground (font)
+                text = lst[i][j],# con i determino la tupla in lst e con j determino il voto all'interno della lista presente all'intermìno della tupla 
                 font = ("Arial", 12 ,"bold"),
                 width = 12,
                 anchor = "w"
@@ -114,100 +114,82 @@ def background(): #impostazioni
     bg.title("Colour Settings")
     bg.geometry("400x300")
     bg.resizable(False, False)
-    bg.config(bg = "bisque")
+    bg.config(bg = "pink")
+
+    colour = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
     
     #color settings for background
-    def change_pink(): 
-        m.configure(bg ="pink")
-        bg.configure(bg= "pink")
+    def change(colour): 
+        m.configure(bg = str(colour))
+        bg.configure(bg= str(colour))
 
-    button_pink = tk.Button(bg, 
-    text = "pink",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_pink)
+    button_pink = tk.Button(
+        bg, 
+        text = "pink",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("pink"))
     #button_pink.grid(row = 1, column = 2)
     button_pink.pack()
 
-    def change_lavender(): 
-        m.configure(bg ="lavender")
-        bg.configure(bg ="lavender")
-
-    button_lavender = tk.Button(bg, 
-    text = "lavender",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_lavender)
+    button_lavender = tk.Button(
+        bg, 
+        text = "lavender",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("lavender"))
     #button_lavender.grid(row = 1, column = 3)
-    button_lavender.pack()
-    
-    def change_khaki(): 
-        m.configure(bg ="khaki")
-        bg.configure(bg ="khaki" ) 
-    
-    button_khaki = tk.Button(bg,
-    text = "khaki",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_khaki)
+    button_lavender.pack() 
+
+    button_khaki = tk.Button(
+        bg,
+        text = "khaki",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("khaki"))
     #button_khaki.grid(row = 1, column = 4)
     button_khaki.pack()
 
-    def change_white(): 
-        m.configure(bg= "white")
-        bg.configure(bg= "white")
-
-    button_white = tk.Button(bg, 
-    text ="white",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_white ) 
+    button_white = tk.Button(
+        bg, 
+        text ="white",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("white")) 
     button_white.pack()
     #button_white.grid(row= 1, column= 5)
 
-    def change_bisque() : 
-        m.configure(bg="bisque2")
-        bg.configure(bg="bisque2")
-
-    button_bisque = tk.Button(bg,
-    text ="bisque",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_bisque ) 
+    button_bisque = tk.Button(
+        bg,
+        text ="bisque",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("bisque2") ) 
     #button_bisque.grid(row=1, colum=6)
     button_bisque.pack()
 
-    def change_aquamarine(): 
-        m.configure(bg="aquamarine4")
-        bg.configure(bg= "aquamarine4")
-
-    button_aquamarine= tk.Button(bg,
-    text= "aquamarine",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_aquamarine)
+    button_aquamarine= tk.Button(
+        bg,
+        text= "aquamarine",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("aquamarine4"))
     button_aquamarine.pack()
 
-    def change_blue(): 
-        m.configure(bg="cadet blue")
-        bg.configure(bg= "cadet blue")
-
-    button_blue = tk.Button(bg,
-    text= "blue",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_blue)
+    button_blue = tk.Button(
+        bg,
+        text= "blue",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("cadet blue"))
     button_blue.pack()
 
-    def change_red(): 
-        m.configure(bg="indianRed3")
-        bg.configure(bg="indianRed3")
-        
-    button_red = tk.Button(bg,
-    text= "red",
-    relief = tk.RAISED,
-    font = ("Arial Bold", 13),
-    command = change_red)
+    button_red = tk.Button(
+        bg,
+        text= "red",
+        relief = tk.RAISED,
+        font = ("Arial Bold", 13),
+        command = lambda:change("red"))
     button_red.pack()
 
 '''
@@ -223,7 +205,7 @@ label.place(x = 0, y = 0)
 variable = tk.StringVar(m)
 variable.set(subjects[0]) 
 
-drop_down_menu = tk.OptionMenu(m, variable, *subjects)
+drop_down_menu = tk.OptionMenu(m, variable, *subjects) #menù a tendina, variable assume il valore che selezioni nel menù
 drop_down_menu.place(x = 464, y = 500, anchor = "se")
 
 text1 = tk.Text(

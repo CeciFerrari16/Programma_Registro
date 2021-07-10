@@ -70,6 +70,30 @@ Thread(target=increment_count).start()
 
 gui.mainloop()
 increment_count.status = 'exit'
+
+def background(): #impostazioni
+    bg = tk.Tk()
+    bg.title("Colour Settings")
+    bg.geometry("400x300")
+    bg.resizable(False, False)
+    bg.config(bg = "bisque")
+
+    colour = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
+    
+    #color settings for background
+    def change(colour): 
+        m.configure(bg = str(colour))
+        bg.configure(bg= str(colour))
+
+    for c in colour:
+        button_colour = tk.Button(
+            bg, 
+            text = c,
+            relief = tk.RAISED,
+            font = ("Arial Bold", 13),
+            command = lambda:change(c))
+        #button_pink.grid(row = 1, column = 2)
+        button_colour.pack()
 '''
 sub = "\n".join(d.keys())
 subjects_label = tk.Label(
