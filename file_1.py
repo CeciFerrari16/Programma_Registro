@@ -117,7 +117,7 @@ def background(): #impostazioni
     bg.config(bg = "pink")
     
     #color settings for background
-    colors= ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
+    colours = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
     def change(colours) : 
         m.configure(bg = str(colours))
         bg.configure(bg=str(colours))
