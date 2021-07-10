@@ -117,95 +117,20 @@ def background(): #impostazioni
     bg.config(bg = "pink")
     
     #color settings for background
-    colours = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
+    colours = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3", "red"]
     def change(colours) : 
         m.configure(bg = str(colours))
         bg.configure(bg=str(colours))
 
-    for i in colours: 
-        button = tk.Button(bg, 
-        text= i,
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command=  lambda i=i: change(i))
+    for i in colours:
+        button = tk.Button(
+            bg, 
+            text= i,
+            relief = tk.RAISED,
+            font = ("Arial Bold", 13),
+            command=  lambda i=i: change(i))
         button.pack()
-'''
-    colour = ["pink", "lavender", "khaki", "white", "bisque2", "aquamarine4", "cadet blue", "indianRed3"]
-    
-    #color settings for background
-    def change(colour): 
-        m.configure(bg = str(colour))
-        bg.configure(bg= str(colour))
 
-    button_pink = tk.Button(
-        bg, 
-        text = "pink",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("pink"))
-    #button_pink.grid(row = 1, column = 2)
-    button_pink.pack()
-
-    button_lavender = tk.Button(
-        bg, 
-        text = "lavender",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("lavender"))
-    #button_lavender.grid(row = 1, column = 3)
-    button_lavender.pack() 
-
-    button_khaki = tk.Button(
-        bg,
-        text = "khaki",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("khaki"))
-    #button_khaki.grid(row = 1, column = 4)
-    button_khaki.pack()
-
-    button_white = tk.Button(
-        bg, 
-        text ="white",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("white")) 
-    button_white.pack()
-    #button_white.grid(row= 1, column= 5)
-
-    button_bisque = tk.Button(
-        bg,
-        text ="bisque",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("bisque2") ) 
-    #button_bisque.grid(row=1, colum=6)
-    button_bisque.pack()
-
-    button_aquamarine= tk.Button(
-        bg,
-        text= "aquamarine",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("aquamarine4"))
-    button_aquamarine.pack()
-
-    button_blue = tk.Button(
-        bg,
-        text= "blue",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("cadet blue"))
-    button_blue.pack()
-
-    button_red = tk.Button(
-        bg,
-        text= "red",
-        relief = tk.RAISED,
-        font = ("Arial Bold", 13),
-        command = lambda:change("red"))
-    button_red.pack()
-'''
 '''
 #objects
 img = ImageTk.PhotoImage(file = "rsz_forest.jpg")
