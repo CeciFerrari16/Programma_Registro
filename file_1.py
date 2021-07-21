@@ -56,6 +56,9 @@ m.geometry("700x500")
 m.resizable(False, False) # non si può ridimensionare la finestra
 m.config(bg = get_colour()) #configuro il background con un colore
 
+def media():
+    pass
+
 def clock():
     time = datetime.datetime.now().strftime("%H:%M:%S")
     lab.config(text = time)
@@ -165,19 +168,20 @@ label = tk.Label(
 label.place(x = 0, y = 0)
 '''
 #drop down menu subjects
-variable = tk.StringVar(m)
-variable.set(subjects[0]) 
+variable = tk.StringVar(m) #stringvar è un oggetto proprio di tk ; variabile stringa
+variable.set(subjects[0]) # ogni volta che apro la finestra viene visualizzata la prima materia della lista subjects
 
-drop_down_menu = tk.OptionMenu(m, variable, *subjects) #menù a tendina, variable assume il valore che selezioni nel menù
-drop_down_menu.place(x = 464, y = 500, anchor = "se")
+drop_down_menu = tk.OptionMenu(m, variable, *subjects) #menù a tendina, variable assume il valore che selezioni nel menù (la materia)
+drop_down_menu.place(x = 464, y = 500, anchor = "se") #àncora se => sud est si riferiscono a un punto che prende riferimento dall'angolo sud est
 
+#buttons
 text1 = tk.Text(
     m,
     height = 1,
     width = 10,
     font = ("Arial Bold", 18)
 )
-text1.place(x = 597, y = 499, anchor = "se")
+text1.place(x = 597, y = 499, anchor = "se") #=> text1 è la casella per inserire il testo
 #text1.grid(row = 10, column = 3 )
 #text1.tag_configure("center", justify = "center")
 #text1.pack()
