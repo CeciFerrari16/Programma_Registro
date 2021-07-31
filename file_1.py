@@ -4,9 +4,9 @@ from tkinter.constants import END
 #from tkinter.messagebox import askyesno
 import json
 #import keyboard as kb 
-from PIL import ImageTk #serve per importare jpg
-from data import d # prende il dizionario vuoto dei voti
-import datetime # per clock()
+from PIL import ImageTk 
+from data import d 
+import datetime 
 
 m = tk.Tk()
 '''
@@ -53,11 +53,21 @@ def get_colour():
 #general things
 m.title("Registro Elettronico")
 m.geometry("700x500")
-m.resizable(False, False) # non si può ridimensionare la finestra
-m.config(bg = get_colour()) #configuro il background con un colore
+m.resizable(False, False) 
+m.config(bg = get_colour()) 
 
-def media():
-    pass
+def check_int(lista):
+    for e in lista:
+        lista[lista.index(e)] = int(e)
+    return lista
+
+def media(lista):
+    check_int(lista)
+    if len(lista) != 0:
+        med = sum(lista)/ len(lista)
+    else:
+        med = "-"
+    return med
 
 def clock():
     time = datetime.datetime.now().strftime("%H:%M:%S")
@@ -65,21 +75,21 @@ def clock():
     #lab['text'] = time
     m.after(1000, clock) # run itself again after 1000 ms
 
-lab = tk.Label(m, font = ("Arial Bold", 13)) #etichetta per aggiungere l'ora all'interfaccia
-lab.place(x = 101, y = 500, anchor = "sw") # aggiunta all'interfaccia + àncora
+lab = tk.Label(m, font = ("Arial Bold", 13)) 
+lab.place(x = 101, y = 500, anchor = "sw") 
 
 #how to save data
 def text_marks():
     file = open("data.json", "r")
-    marks = file.read() #tutto il contenuto del file data.json è trasformato in stringa e assegnato alla variabile marks
+    marks = file.read() 
     file.close()
     return marks
     
 def save_marks():
     with open("data.json", "r") as file:
-        dct = eval(file.read()) #converte stringa in dizionario quando possibile
+        dct = eval(file.read()) 
         file.close()
-    data = text1.get('1.0', END) #assegna alla variabile data il contenuto della casellla di testo text1
+    data = text1.get('1.0', END) 
     #print(isinstance(data, str))
     if len(data) == 0 : pass
     elif data.isnumeric() == True:
@@ -95,35 +105,45 @@ def delete_marks():
         dct = eval(file.read())
         file.close()
     elem = dct[variable.get()][-1]
-    dct[variable.get()].remove(elem) #elimina l'ultimo voto della materia scelta
+    dct[variable.get()].remove(elem)
     json_file = json.dumps(dct)
     with open("data.json", "w") as file:
         file.write(json_file)
         file.close()
 
-def list_update(dict): # remove \n from list and update data.json
+def list_update(dict): 
     value = dict[variable.get()]
     d1 = [s.rstrip() for s in value] 
-    dict[variable.get()] = d1 #riassegno il valore aggiornato al dizionario
-    json_file = json.dumps(dict) #serve per modificare i file json
+    dict[variable.get()] = d1 
+    json_file = json.dumps(dict) 
     with open("data.json", "w") as file:
-        file.write(json_file) #aggiorno il file
+        file.write(json_file)
         file.close()
     
+def marks_list(d, lista):
+    lista.clear()
+    for v in d.values():
+        for e in v:
+            lista.append(e)
+    check_int(lista)
+    return lista
+
+marklist = []
+
 def update(): # marks table
     marks = eval(text_marks())
-    lst = [(k, v) for k, v in marks.items()] #lista formata da tuple
-
+    lst = [(k, media(v)) for k, v in marks.items()] 
+    marks_list(marks, marklist)
+    
     total_rows = len(lst)
     total_columns = len(lst[0])
 
-    for i in range(total_rows): #crea una tabella con i voti
+    for i in range(total_rows): 
         for j in range(total_columns):
-            
             mark = tk.Label(
                 m, 
-                fg = "black", #foreground (font)
-                text = lst[i][j],# con i determino la tupla in lst e con j determino il voto all'interno della lista presente all'intermìno della tupla 
+                fg = "black", 
+                text = lst[i][j],
                 font = ("Arial", 12 ,"bold"),
                 width = 12,
                 anchor = "w"
@@ -168,11 +188,11 @@ label = tk.Label(
 label.place(x = 0, y = 0)
 '''
 #drop down menu subjects
-variable = tk.StringVar(m) #stringvar è un oggetto proprio di tk ; variabile stringa
-variable.set(subjects[0]) # ogni volta che apro la finestra viene visualizzata la prima materia della lista subjects
+variable = tk.StringVar(m) 
+variable.set(subjects[0]) 
 
-drop_down_menu = tk.OptionMenu(m, variable, *subjects) #menù a tendina, variable assume il valore che selezioni nel menù (la materia)
-drop_down_menu.place(x = 464, y = 500, anchor = "se") #àncora se => sud est si riferiscono a un punto che prende riferimento dall'angolo sud est
+drop_down_menu = tk.OptionMenu(m, variable, *subjects) 
+drop_down_menu.place(x = 464, y = 500, anchor = "se") 
 
 #buttons
 text1 = tk.Text(
@@ -181,7 +201,7 @@ text1 = tk.Text(
     width = 10,
     font = ("Arial Bold", 18)
 )
-text1.place(x = 597, y = 499, anchor = "se") #=> text1 è la casella per inserire il testo
+text1.place(x = 597, y = 499, anchor = "se") 
 #text1.grid(row = 10, column = 3 )
 #text1.tag_configure("center", justify = "center")
 #text1.pack()
