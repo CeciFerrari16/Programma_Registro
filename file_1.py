@@ -41,7 +41,8 @@ colours = [
     "aquamarine4", 
     "cadet blue", 
     "indianRed3", 
-    "red"
+    "red",
+    "black"
 ]
 
 def get_colour():
@@ -64,7 +65,7 @@ def check_int(lista):
 def media(lista):
     check_int(lista)
     if len(lista) != 0:
-        med = sum(lista)/ len(lista)
+        med = round(sum(lista)/ len(lista), 2)
     else:
         med = "-"
     return med
@@ -134,7 +135,7 @@ def update(): # marks table
     marks = eval(text_marks())
     lst = [(k, media(v)) for k, v in marks.items()] 
     marks_list(marks, marklist)
-    
+
     total_rows = len(lst)
     total_columns = len(lst[0])
 
@@ -145,15 +146,26 @@ def update(): # marks table
                 fg = "black", 
                 text = lst[i][j],
                 font = ("Arial", 12 ,"bold"),
-                width = 12,
+                width = 11,
                 anchor = "w"
             )
             mark.grid(row = i, column = j)
+    
+    average_mark = tk.Label(
+        m,
+        fg = "white",
+        bg = "midnightblue",
+        text = media(marklist),
+        font = ("Arial", 25 ,"bold"),
+        width = 5,
+        height = 2
+    )
+    average_mark.place(x = 700, y = 0, anchor = "ne")
 
 def background(): #impostazioni
     bg = tk.Tk()
     bg.title("Colour Settings")
-    bg.geometry("400x300")
+    #bg.geometry("400x300")
     bg.resizable(False, False)
     bg.config(bg = get_colour())
 
