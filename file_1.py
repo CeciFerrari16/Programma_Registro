@@ -112,6 +112,13 @@ def delete_marks():
         file.write(json_file)
         file.close()
 
+def check_mark(label, num):
+    if num != "-":
+        if num < 6:
+            label.config(fg = "red")
+        else: pass
+    else: pass
+
 def list_update(dict): 
     value = dict[variable.get()]
     d1 = [s.rstrip() for s in value] 
@@ -145,10 +152,11 @@ def update(): # marks table
                 m, 
                 fg = "black", 
                 text = lst[i][j],
-                font = ("Arial", 12 ,"bold"),
-                width = 11,
+                font = ("Arial", 21 ,"bold"),
+                width = 10,
                 anchor = "w"
             )
+            check_mark(mark, lst[i][1])
             mark.grid(row = i, column = j)
     
     average_mark = tk.Label(
