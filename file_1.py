@@ -76,7 +76,7 @@ def clock():
     #lab['text'] = time
     m.after(1000, clock) # run itself again after 1000 ms
 
-lab = tk.Label(m, font = ("Arial Bold", 13)) 
+lab = tk.Label(m, font = ("Arial Bold", 17)) 
 lab.place(x = 101, y = 500, anchor = "sw") 
 
 #how to save data
@@ -153,7 +153,8 @@ def update(): # marks table
                 fg = "black", 
                 text = lst[i][j],
                 font = ("Arial", 21 ,"bold"),
-                width = 10,
+                bg = "white",
+                width = 11,
                 anchor = "w"
             )
             check_mark(mark, lst[i][1])
@@ -161,14 +162,14 @@ def update(): # marks table
     
     average_mark = tk.Label(
         m,
-        fg = "white",
-        bg = "midnightblue",
+        fg = "black",
+        bg = "white",
         text = media(marklist),
-        font = ("Arial", 25 ,"bold"),
-        width = 5,
+        font = ("Arial", 30 ,"bold"),
+        width = 7,
         height = 2
     )
-    average_mark.place(x = 700, y = 0, anchor = "ne")
+    average_mark.place(x = 628, y = 325, anchor = "ne")
 
 def background(): #impostazioni
     bg = tk.Tk()
@@ -207,6 +208,19 @@ label = tk.Label(
 )
 label.place(x = 0, y = 0)
 '''
+
+tag_average = tk.Label( 
+    m, 
+    fg = "black", 
+    text = "Media Generale",
+    font = ("Arial", 23 ,"bold"),
+    width = 12,
+    anchor = "e",
+    bg = "white"
+)
+
+tag_average.place(x = 660, y = 258, anchor = "ne") 
+
 #drop down menu subjects
 variable = tk.StringVar(m) 
 variable.set(subjects[0]) 

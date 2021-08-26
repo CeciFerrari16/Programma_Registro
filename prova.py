@@ -170,5 +170,5 @@ root.mainloop()
 MODIFICHE UTILI DA FARE AL PROGRAMMA:
 1) finestra principale con media per ogni materia
 2) aggiungi alla finestra principale un grafico con andamento media generale
-3) mettere finestra supplementare che faccia vedere tutti i voti aggiunti in ordine cronologico
+3) mettere finestra supplementare che faccia vedere tutti i voti aggiunti in ordine cronologicoùù
 '''
