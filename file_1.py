@@ -278,7 +278,35 @@ settings = tk.Button(
     relief = tk.RAISED,
     command = background
 )
+
 settings.place(relx = 0.0, rely= 1.0, anchor = "sw")
+
+#another drop down menu to check the grades of each subject 
+variable2 = tk.StringVar(m)
+variable2.set(subjects[0])         
+drop_down_menu2 = tk.OptionMenu(m, variable2, *subjects)
+drop_down_menu2.place(x = 628, y = 42, anchor = "ne")
+drop_down_menu2.config(width = 28)
+
+def show():
+    for sub in subjects: 
+        if sub == variable2.get()  : 
+            new = tk.Tk()
+            new.title(sub)
+            new.geometry("240x240")
+            new.resizable(False, False)
+            new.config(bg="white")#(bg = get_colour())
+
+show_button = tk.Button(
+   m,
+   bg="white",
+   text="CHECK",
+   font = ("Arial", 27 ,"bold"),
+   width = 14,
+   height = 1,
+   command = show
+)
+show_button.place(x = 628, y = 2, anchor = "ne")
 
 clock()
 update()
