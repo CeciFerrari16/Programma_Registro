@@ -6,7 +6,8 @@ import json
 #import keyboard as kb 
 from PIL import ImageTk 
 from data import d 
-import datetime 
+import datetime
+from tkcalendar import Calendar, DateEntry
 
 m = tk.Tk()
 '''
@@ -79,13 +80,30 @@ def clock():
 lab = tk.Label(m, font = ("Arial Bold", 17)) 
 lab.place(x = 101, y = 500, anchor = "sw") 
 
+#Create a Calendar using DateEntry
+cal = DateEntry(
+    m, 
+    width = 10,
+    font = ("Arial", 14), 
+    background= "blue", 
+    foreground= "white",
+    #bd=2
+)
+cal.place(x = 463, y = 470, anchor = "sw")
+
 #how to save data
 def text_marks():
     file = open("data.json", "r")
     marks = file.read() 
     file.close()
     return marks
-    
+
+def get_day(): pass
+
+def save_day(): pass
+
+def delete_day(): pass
+
 def save_marks():
     with open("data.json", "r") as file:
         dct = eval(file.read()) 
@@ -154,7 +172,7 @@ def update(): # marks table
                 text = lst[i][j],
                 font = ("Arial", 21 ,"bold"),
                 bg = "white",
-                width = 11,
+                width = 10,
                 anchor = "w"
             )
             check_mark(mark, lst[i][1])
@@ -169,7 +187,8 @@ def update(): # marks table
         width = 7,
         height = 2
     )
-    average_mark.place(x = 628, y = 325, anchor = "ne")
+    average_mark.place(x = 614, y = 325, anchor = "ne")
+    check_mark(average_mark, media(marklist))
 
 def background(): #impostazioni
     bg = tk.Tk()
@@ -215,18 +234,32 @@ tag_average = tk.Label(
     text = "Media Generale",
     font = ("Arial", 23 ,"bold"),
     width = 12,
-    anchor = "e",
+    #anchor = "e",
     bg = "white"
 )
+tag_average.place(x = 644, y = 258, anchor = "ne")
 
-tag_average.place(x = 660, y = 258, anchor = "ne") 
+tag_marks = tk.Label(
+    m,
+    fg = "black",
+    text = "Vedi Voti per Materia",
+    font = ("Arial", 19, "bold"),
+    bg = "white"
+)
+tag_marks.place(x = 655, y = 20, anchor = "ne")
 
 #drop down menu subjects
 variable = tk.StringVar(m) 
 variable.set(subjects[0]) 
 
 drop_down_menu = tk.OptionMenu(m, variable, *subjects) 
-drop_down_menu.place(x = 464, y = 500, anchor = "se") 
+drop_down_menu.place(x = 464, y = 500, anchor = "se")
+
+variable1 = tk.StringVar(m)
+variable1.set("Scegli una materia") 
+
+drop_down_menu1 = tk.OptionMenu(m, variable1, *subjects) 
+drop_down_menu1.place(x = 457, y = 80, anchor = "nw")
 
 #buttons
 text1 = tk.Text(
@@ -271,6 +304,15 @@ update_button = tk.Button(
 )
 update_button.place(x = 36, y = 500, anchor = "sw")
 
+marksheet_button = tk.Button(
+    m,
+    text = "Apri Scheda Voti",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 15, "bold")#,
+    #command = all_marks
+)
+marksheet_button.place(x = 440, y = 125, anchor = "nw")
+
 img_setting = ImageTk.PhotoImage(file = "settings(2).jpg")
 settings = tk.Button(
     m,
@@ -281,6 +323,7 @@ settings = tk.Button(
 
 settings.place(relx = 0.0, rely= 1.0, anchor = "sw")
 
+'''
 #another drop down menu to check the grades of each subject 
 variable2 = tk.StringVar(m)
 variable2.set(subjects[0])         
@@ -307,6 +350,7 @@ show_button = tk.Button(
    command = show
 )
 show_button.place(x = 628, y = 2, anchor = "ne")
+'''
 
 clock()
 update()

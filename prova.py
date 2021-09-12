@@ -1,75 +1,89 @@
-import time
-import tkinter as tk
-import tkinter.ttk as ttk
-from threading import Thread
+#Create a Calendar using DateEntry
+cal = DateEntry(
+    m, 
+    width = 10,
+    font = ("Arial", 14), 
+    background= "blue", 
+    foreground= "white",
+    #bd=2
+)
+cal.place(x = 463, y = 470, anchor = "sw")
 
-gui = tk.Tk()
-gui.geometry('360x270')
-gui.configure(bg='white')
+def get_day(): pass
 
-style = ttk.Style()
-style.theme_create('custom', settings={
-    'header.TLabel': {'configure': {
-        'background': 'white',
-        'foreground': 'dark green',
-        'font': 'Times 16 bold',
-        'padding': (10, 0)}},
-    'TLabel': {'configure': {'background': 'white', 'font': 'Times 12'}},
-    'TFrame': {'configure': {'background': 'white'}}})
-style.theme_use('custom')
+def save_day():
+    with open("day.json", "r") as file:
+        dct1 = eval(file.read()) 
+        file.close()
+    data = str(cal.get_date())
+    dct1[variable.get()].append(data)
+    #print(dct1)
+    json_file = json.dumps(dct1) 
+    with open("day.json", "w") as file:
+        file.write(json_file)
+        file.close()
 
-table_frame = ttk.Frame(gui)
-table_frame.pack(pady=(36, 0))
+def delete_day():
+    with open("day.json", "r") as file:
+        dct1 = eval(file.read())
+        file.close()
+    elem = dct1[variable.get()][-1]
+    dct1[variable.get()].remove(elem)
+    json_file = json.dumps(dct1)
+    with open("day.json", "w") as file:
+        file.write(json_file)
+        file.close()
+    
+def all_marks(): #tutti i voti
+    card = tk.Tk()
+    card.title("Marks in Cronological Order")
+    card.geometry("500x500")
+    #card.resizable(False, False)
+    #card.config(bg = get_colour())
 
-values = [('Count', 'Date', 'Time', 'Phrase'),
-          ('5', '12/12/10', '03:15', 'blue car'),
-          ('13', '09/09/98', '16:20', 'red door')]
+    def reverse_list(file_name):
+        with open(file_name, "r") as file:
+            dct = eval(file.read()) 
+            file.close()
+        list_elem = dct[variable1.get()]
+        list_elem.reverse()
+        return list_elem
 
-total_rows = len(values)
-total_columns = len(values[0])
+    vote_list = reverse_list("data.json")
+    time_list = reverse_list("day.json")
 
-for i in range(total_rows):
-    for j in range(total_columns):
-        if i == 0:
-            label = ttk.Label(table_frame, text=values[i][j], style='header.TLabel')
-            label.grid(row=i, column=j)
-        elif i == 1:
-            if j == 0:
-                count1 = tk.StringVar()
-                count1.set(values[i][j])
-                label = ttk.Label(table_frame, textvariable=count1)
-                label.grid(row=i, column=j)
-            else:
-                label = ttk.Label(table_frame, text=values[i][j])
-                label.grid(row=i, column=j)
-        elif i == 2:
-            if j == 0:
-                count2 = tk.StringVar()
-                count2.set(values[i][j])
-                label = ttk.Label(table_frame, textvariable=count2)
-                label.grid(row=i, column=j)
-            else:
-                label = ttk.Label(table_frame, text=values[i][j])
-                label.grid(row=i, column=j)
+    def create_label(vote, time):
+        lab = tk.Label(
+            card,
+            fg = "black",
+            bg = get_colour(),
+            text = vote + " " + time,
+            font = ("Arial", 20 ,"bold"),
+            width = 7,
+            #height = 2     
+        )
+        lab.pack()
 
+    for n in range(len(vote_list)):
+        create_label(vote_list[n], time_list[n])
 
-def increment_count():
-    increment_count.status = 'run'
+tag_marks = tk.Label(
+    m,
+    fg = "black",
+    text = "Vedi Voti per Materia",
+    font = ("Arial", 19, "bold"),
+    bg = "white"
+)
+tag_marks.place(x = 655, y = 20, anchor = "ne")
 
-    while increment_count.status == 'run':
-        new_minute1 = int(count1.get()) + 1
-        count1.set(str(new_minute1))
-
-        new_minute2 = int(count2.get()) - 1
-        count2.set(str(new_minute2))
-
-        time.sleep(1)
-
-
-Thread(target=increment_count).start()
-
-gui.mainloop()
-increment_count.status = 'exit'
+marksheet_button = tk.Button(
+    m,
+    text = "Apri Scheda Voti",
+    relief = tk.RAISED,
+    font = ("Arial Bold", 15, "bold"),
+    command = all_marks
+)
+marksheet_button.place(x = 440, y = 125, anchor = "nw")
 
 '''
         if colours.index(i) < 3:
