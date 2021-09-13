@@ -8,6 +8,7 @@ from PIL import ImageTk
 from data import d 
 import datetime
 from tkcalendar import Calendar, DateEntry
+import matplotlib.pyplot as plt
 
 m = tk.Tk()
 '''
@@ -100,11 +101,31 @@ def text_marks():
 
 def get_day(): pass
 
-def save_day(): pass
+def save_day():
+    with open("day.json", "r") as file:
+        dct1 = eval(file.read()) 
+        file.close()
+    data = str(cal.get_date())
+    dct1[variable.get()].append(data)
+    #print(dct1)
+    json_file = json.dumps(dct1) 
+    with open("day.json", "w") as file:
+        file.write(json_file)
+        file.close()
 
-def delete_day(): pass
+def delete_day():
+    with open("day.json", "r") as file:
+        dct1 = eval(file.read())
+        file.close()
+    elem = dct1[variable.get()][-1]
+    dct1[variable.get()].remove(elem)
+    json_file = json.dumps(dct1)
+    with open("day.json", "w") as file:
+        file.write(json_file)
+        file.close()
 
 def save_marks():
+    save_day()
     with open("data.json", "r") as file:
         dct = eval(file.read()) 
         file.close()
@@ -120,6 +141,7 @@ def save_marks():
         list_update(dct)
 
 def delete_marks():
+    delete_marks()
     with open("data.json", "r") as file:
         dct = eval(file.read())
         file.close()
@@ -211,6 +233,17 @@ def background(): #impostazioni
             font = ("Arial Bold", 13),
             command = lambda i=i: change(i))
         button.pack()
+
+def graphic():
+    '''
+    gr = tk.Tk()
+    gr.title("Grafico dei Voti")
+    #bg.geometry("400x300")
+    gr.resizable(False, False)
+    gr.config(bg = get_colour())
+    '''
+    grafico = []
+
 
 def save_colour(colour):
     with open("colour.txt", "w") as file:
@@ -308,8 +341,8 @@ marksheet_button = tk.Button(
     m,
     text = "Apri Scheda Voti",
     relief = tk.RAISED,
-    font = ("Arial Bold", 15, "bold")#,
-    #command = all_marks
+    font = ("Arial Bold", 15, "bold"),
+    command = graphic
 )
 marksheet_button.place(x = 440, y = 125, anchor = "nw")
 
@@ -320,37 +353,7 @@ settings = tk.Button(
     relief = tk.RAISED,
     command = background
 )
-
 settings.place(relx = 0.0, rely= 1.0, anchor = "sw")
-
-'''
-#another drop down menu to check the grades of each subject 
-variable2 = tk.StringVar(m)
-variable2.set(subjects[0])         
-drop_down_menu2 = tk.OptionMenu(m, variable2, *subjects)
-drop_down_menu2.place(x = 628, y = 42, anchor = "ne")
-drop_down_menu2.config(width = 28)
-
-def show():
-    for sub in subjects: 
-        if sub == variable2.get()  : 
-            new = tk.Tk()
-            new.title(sub)
-            new.geometry("240x240")
-            new.resizable(False, False)
-            new.config(bg="white")#(bg = get_colour())
-
-show_button = tk.Button(
-   m,
-   bg="white",
-   text="CHECK",
-   font = ("Arial", 27 ,"bold"),
-   width = 14,
-   height = 1,
-   command = show
-)
-show_button.place(x = 628, y = 2, anchor = "ne")
-'''
 
 clock()
 update()
