@@ -11,17 +11,18 @@ from tkcalendar import Calendar, DateEntry
 import matplotlib.pyplot as plt
 
 m = tk.Tk()
-'''
+
 #cursor coordinates
 def motion(event):
     x, y = event.x, event.y
     print('{}, {}'.format(x, y))
 
 m.bind('<Motion>', motion)
-'''
+
 subjects = [
     "Arte",
     "Ed. Civica",
+    "Filosofia",
     "Fisica",
     "Informatica",
     "Inglese",
@@ -99,7 +100,56 @@ def text_marks():
     file.close()
     return marks
 
-def get_day(): pass
+def get_month(materia, voto):
+    with open("data.json", "r") as file:
+        dct = eval(file.read()) 
+        file.close()
+    index_voto = dct[materia].index[voto]
+    with open("day.json", "r") as file:
+        dct1 = eval(file.read()) 
+        file.close()
+    data = dct[materia][index_voto]
+    x = data.split("-")
+    month = x[1]
+    return month
+    
+def get_media(month):
+    with open("a_month.json", "r") as file:
+        dct2 = eval(file.read()) 
+        file.close()
+    data = dct2[month]
+    if data == []:
+        media = 0
+    else:
+        media = sum(data)/len(data)
+    return media
+
+def save_month(voto):
+    mydate = datetime.datetime.now()
+    with open("a_month.json", "r") as file:
+        dct2 = eval(file.read()) 
+        file.close()
+    data = mydate.strftime("%B")
+    print(data)
+    dct2[data].append(int(voto))
+    #print(dct1)
+    json_file = json.dumps(dct2) 
+    with open("a_month.json", "w") as file:
+        file.write(json_file)
+        file.close()
+
+def delete_month():
+    mydate = datetime.datetime.now()
+    with open("a_month.json", "r") as file:
+        dct2 = eval(file.read()) 
+        file.close()
+    data = mydate.strftime("%B")
+    elem = dct2[data][-1]
+    dct2[data].remove(elem)
+    json_file = json.dumps(dct2)
+    with open("a_month.json", "w") as file:
+        file.write(json_file)
+        file.close()
 
 def save_day():
     with open("day.json", "r") as file:
@@ -137,11 +187,13 @@ def save_marks():
     elif float(data) > 10 or float(data) < 1:
         pass
     else:
+        save_month(data)
         dct[variable.get()].append(data)
         list_update(dct)
 
 def delete_marks():
-    delete_marks()
+    delete_day()
+    delete_month()
     with open("data.json", "r") as file:
         dct = eval(file.read())
         file.close()
@@ -192,7 +244,7 @@ def update(): # marks table
                 m, 
                 fg = "black", 
                 text = lst[i][j],
-                font = ("Arial", 21 ,"bold"),
+                font = ("Arial", 19 ,"bold"),
                 bg = "white",
                 width = 10,
                 anchor = "w"
@@ -209,7 +261,7 @@ def update(): # marks table
         width = 7,
         height = 2
     )
-    average_mark.place(x = 614, y = 325, anchor = "ne")
+    average_mark.place(x = 597, y = 325, anchor = "ne")
     check_mark(average_mark, media(marklist))
 
 def background(): #impostazioni
@@ -235,15 +287,14 @@ def background(): #impostazioni
         button.pack()
 
 def graphic():
-    '''
-    gr = tk.Tk()
-    gr.title("Grafico dei Voti")
-    #bg.geometry("400x300")
-    gr.resizable(False, False)
-    gr.config(bg = get_colour())
-    '''
-    grafico = []
-
+    months = ["September", "October", "November", "December", "January", "February", "March", "April", "May", "June"]
+    rainfall = []
+    for m in months:
+        rainfall.append(get_media(m))
+    
+    plt.bar(range(len(10)), rainfall, align = "center", color = "blue")
+    plt.xticks(range(len(rainfall)), months, rotation = "vertical")
+    plt.show()
 
 def save_colour(colour):
     with open("colour.txt", "w") as file:
@@ -270,16 +321,16 @@ tag_average = tk.Label(
     #anchor = "e",
     bg = "white"
 )
-tag_average.place(x = 644, y = 258, anchor = "ne")
+tag_average.place(x = 624, y = 258, anchor = "ne")
 
 tag_marks = tk.Label(
     m,
     fg = "black",
-    text = "Vedi Voti per Materia",
+    text = "Vedi Grafico della Media",
     font = ("Arial", 19, "bold"),
     bg = "white"
 )
-tag_marks.place(x = 655, y = 20, anchor = "ne")
+tag_marks.place(x = 655, y = 60, anchor = "ne")
 
 #drop down menu subjects
 variable = tk.StringVar(m) 
@@ -287,12 +338,6 @@ variable.set(subjects[0])
 
 drop_down_menu = tk.OptionMenu(m, variable, *subjects) 
 drop_down_menu.place(x = 464, y = 500, anchor = "se")
-
-variable1 = tk.StringVar(m)
-variable1.set("Scegli una materia") 
-
-drop_down_menu1 = tk.OptionMenu(m, variable1, *subjects) 
-drop_down_menu1.place(x = 457, y = 80, anchor = "nw")
 
 #buttons
 text1 = tk.Text(
@@ -339,7 +384,7 @@ update_button.place(x = 36, y = 500, anchor = "sw")
 
 marksheet_button = tk.Button(
     m,
-    text = "Apri Scheda Voti",
+    text = "Apri Grafico",
     relief = tk.RAISED,
     font = ("Arial Bold", 15, "bold"),
     command = graphic
