@@ -7,18 +7,19 @@ import json
 from PIL import ImageTk 
 from data import d 
 import datetime
+import calendar
 from tkcalendar import Calendar, DateEntry
 import matplotlib.pyplot as plt
 
 m = tk.Tk()
-
+'''
 #cursor coordinates
 def motion(event):
     x, y = event.x, event.y
     print('{}, {}'.format(x, y))
 
 m.bind('<Motion>', motion)
-
+'''
 subjects = [
     "Arte",
     "Ed. Civica",
@@ -104,16 +105,16 @@ def get_month(materia, voto):
     with open("data.json", "r") as file:
         dct = eval(file.read()) 
         file.close()
-    index_voto = dct[materia].index[voto]
+    index_voto = dct[materia].index(voto)
     with open("day.json", "r") as file:
         dct1 = eval(file.read()) 
         file.close()
-    data = dct[materia][index_voto]
+    data = dct1[materia][index_voto]
     x = data.split("-")
-    month = x[1]
+    month = int(x[1])
     return month
     
-def get_media(month):
+def get_average(month):
     with open("a_month.json", "r") as file:
         dct2 = eval(file.read()) 
         file.close()
@@ -125,14 +126,13 @@ def get_media(month):
     return media
 
 def save_month(voto):
-    mydate = datetime.datetime.now()
     with open("a_month.json", "r") as file:
         dct2 = eval(file.read()) 
         file.close()
-    data = mydate.strftime("%B")
-    print(data)
-    dct2[data].append(int(voto))
-    #print(dct1)
+    data = get_month(variable.get(), voto)
+    month = calendar.month_name[data]
+    print(month)
+    dct2[month].append(int(voto))
     json_file = json.dumps(dct2) 
     with open("a_month.json", "w") as file:
         file.write(json_file)
@@ -187,9 +187,9 @@ def save_marks():
     elif float(data) > 10 or float(data) < 1:
         pass
     else:
-        save_month(data)
         dct[variable.get()].append(data)
         list_update(dct)
+        save_month(str(int(data)))
 
 def delete_marks():
     delete_day()
@@ -290,9 +290,9 @@ def graphic():
     months = ["September", "October", "November", "December", "January", "February", "March", "April", "May", "June"]
     rainfall = []
     for m in months:
-        rainfall.append(get_media(m))
+        rainfall.append(get_average(m))
     
-    plt.bar(range(len(10)), rainfall, align = "center", color = "blue")
+    plt.bar(range(len(rainfall)), rainfall, align = "center", color = "blue")
     plt.xticks(range(len(rainfall)), months, rotation = "vertical")
     plt.show()
 
