@@ -1,9 +1,6 @@
 import tkinter as tk
 from tkinter.constants import END
-#from tkinter.filedialog import asksaveasfilename
-#from tkinter.messagebox import askyesno
-import json
-#import keyboard as kb 
+import json 
 from PIL import ImageTk 
 from data import d 
 import datetime
